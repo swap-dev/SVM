@@ -4,10 +4,7 @@ namespace SVM::BytecodeProcessor {
 	std::map<unsigned long, std::vector<std::any>> bytecode_to_instruction_order(std::string bytecode) {
 		std::map<unsigned long, std::vector<std::any>> ret;
 
-		size_t pos = 0;
-		std::string instruction;
 		const auto instructions = string_split(bytecode, BYTECODE_SEPARATOR);
-
 		for (const std::any& el : instructions)
 		{
 			const std::string instruction = std::any_cast<const std::string>(el);
