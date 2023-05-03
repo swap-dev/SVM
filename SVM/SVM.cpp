@@ -1,4 +1,4 @@
-﻿#include "SVM.h"
+#include "SVM.h"
 
 unsigned short check_for_exit_condition(std::stack<std::string>& program_stack)
 {
@@ -24,7 +24,7 @@ int main()
 	{
 		for (const auto& arg : instruction.second)
 		{
-			SVM::Globals::program_stack.push(std::any_cast<std::string>(arg));
+			SVM::Globals::program_stack.emplace(std::any_cast<std::string>(arg));
 			std::cout << "stack size: " << SVM::Globals::program_stack.size() << "\n";
 		}
 

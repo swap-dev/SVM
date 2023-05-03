@@ -8,11 +8,11 @@ namespace SVM::system {
 
 	void RETURN()
 	{
-		SVM::Globals::program_stack.push("INTERNAL_SVM_FUNCTION_RETURN");
+		SVM::Globals::program_stack.emplace("INTERNAL_SVM_FUNCTION_RETURN");
 	}
 
 	void SELFDESTRUCT()
 	{
-		SVM::Globals::program_stack.push("INTERNAL_SVM_FUNCTION_SELFDESTRUCT");
+		SVM::Globals::program_stack.emplace("INTERNAL_SVM_FUNCTION_SELFDESTRUCT");
 	}
 }
