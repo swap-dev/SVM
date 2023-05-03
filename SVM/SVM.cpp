@@ -8,18 +8,15 @@ unsigned short check_for_exit_condition(std::stack<std::string>& program_stack)
 	const std::string exit_type = stack_top.substr(22);
 
 	if (exit_type == "RETURN") return 1;
-	if (exit_type == "SELFDESTRUCT") return 2;
+	else if (exit_type == "SELFDESTRUCT") return 2;
 	else return 65535;
 }
 
 int main()
 {
-	std::stack<std::string> program_stack;
-
-	std::map<unsigned long, std::function<void(std::stack<std::string>&)>> instructions_mapping;
-	SVM::system::append_functions(instructions_mapping);
-
 	std::string bytecode = "0,Hello World!;1";
+
+	SVM::Globals::initialize_instruction_mappings();
 
 	const std::map<unsigned long, std::vector<std::any>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
 
@@ -27,12 +24,15 @@ int main()
 	{
 		for (const auto& arg : instruction.second)
 		{
-			program_stack.push(std::any_cast<std::string>(arg));
+			SVM::Globals::program_stack.push(std::any_cast<std::string>(arg));
+			std::cout << "stack size: " << SVM::Globals::program_stack.size() << "\n";
 		}
 
-		instructions_mapping[instruction.first](program_stack);
+		std::cout << "instruction ID: " << instruction.first << "\n";
 
-		switch (check_for_exit_condition(program_stack))
+		SVM::Globals::instructions_mapping[instruction.first]();
+
+		switch (check_for_exit_condition(SVM::Globals::program_stack))
 		{
 		case 0:
 			break;

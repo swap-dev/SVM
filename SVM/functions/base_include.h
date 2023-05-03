@@ -2,9 +2,6 @@
 #ifndef FUNCTIONS_BASE_INCLUDE_H
 #define FUNCTIONS_BASE_INCLUDE_H
 
-#include <functional>
-#include <map>
-#include <stack>
-#include <string>
+#include "../globals.h"
 
 #endif // !FUNCTIONS_BASE_INCLUDE_H

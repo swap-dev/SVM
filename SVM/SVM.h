@@ -8,6 +8,6 @@
 #include <map>
 #include <any>
 #include "bytecode_processor.h"
-#include "functions/system.h"
+#include "globals.h"
 
 #endif // !SMV_H
