@@ -5,9 +5,9 @@
 #include <iostream>
 #include <vector>
 #include <stack>
-#include <map>
+#include <tsl/ordered_map.h>
 #include <any>
 #include "bytecode_processor.h"
-#include "functions/system.h"
+#include "globals.h"
 
 #endif // !SMV_H
