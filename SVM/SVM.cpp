@@ -1,8 +1,10 @@
-#include "SVM.h"
+﻿#include "SVM.h"
 
-unsigned short check_for_exit_condition(std::stack<std::string>& program_stack)
+unsigned short check_for_exit_condition()
 {
-	const std::string stack_top = program_stack.top();
+	if (SVM::Globals::program_stack.empty()) return 0;
+
+	const std::string stack_top = SVM::Globals::program_stack.top();
 	if (stack_top.rfind("INTERNAL_SVM_FUNCTION_", 0) != 0) return 0;
 
 	const std::string exit_type = stack_top.substr(22);
@@ -14,25 +16,21 @@ unsigned short check_for_exit_condition(std::stack<std::string>& program_stack)
 
 int main()
 {
-	std::string bytecode = "0,Hello World!;1";
+	std::string bytecode = "0,Hello World!;4;3,test element";
 
 	SVM::Globals::initialize_instruction_mappings();
 
-	const std::map<unsigned long, std::vector<std::any>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
+	const tsl::ordered_map<unsigned long, std::vector<std::any>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
 
 	for (const auto& instruction : user_instructions)
 	{
 		for (const auto& arg : instruction.second)
 		{
 			SVM::Globals::program_stack.emplace(std::any_cast<std::string>(arg));
-			std::cout << "stack size: " << SVM::Globals::program_stack.size() << "\n";
 		}
-
-		std::cout << "instruction ID: " << instruction.first << "\n";
-
 		SVM::Globals::instructions_mapping[instruction.first]();
 
-		switch (check_for_exit_condition(SVM::Globals::program_stack))
+		switch (check_for_exit_condition())
 		{
 		case 0:
 			break;
@@ -47,6 +45,14 @@ int main()
 			std::cout << "Invalid check_for_exit_condition return code" << "\n";
 			break;
 		}
+	}
+
+	std::cout << "\n\n";
+	while (!SVM::Globals::program_stack.empty())
+	{
+		const std::string& element = SVM::Globals::program_stack.top();
+		std::cout << element << "\n";
+		SVM::Globals::program_stack.pop();
 	}
 
 	return 0;

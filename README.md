@@ -11,5 +11,5 @@ Swap Virtual Machine bytecode interpreter.
 |3|`PUSH`|`<element>`|Push an element onto the program stack|
 |4|`POP`|none|Remove the top-most element from the program stack|
 |5|`SSTORE`|`<id>`,`<element>`|Store an element with identifier `<id>` in blockchain storage|
-|6|`SLOAD`|`<id>`|Get an element with identifier `<id>` from blockchain storage|
-|7|`MSIZE`|none|Get size of program stack in bytes|
+|6|`SLOAD`|`<id>`|Get an element with identifier `<id>` from blockchain storage and emplace it onto the stack|
+|7|`MSIZE`|none|Emplace the size of the stack (in bytes; calculated before this operation) onto the stack|
