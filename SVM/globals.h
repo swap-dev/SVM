@@ -7,6 +7,7 @@
 #include <map>
 #include <stack>
 #include <functional>
+#include <string>
 #include "functions/all.h"
 
 namespace SVM::Globals
