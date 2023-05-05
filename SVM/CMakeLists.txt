@@ -4,6 +4,3 @@ add_executable (SVM "SVM.cpp" "SVM.h" "bytecode_processor.h" "bytecode_processor
 set_property(TARGET SVM PROPERTY CXX_STANDARD 20)
 
 add_subdirectory("functions")
-
-add_subdirectory("vendor/ordered-map")
-target_link_libraries(SVM PRIVATE tsl::ordered_map)

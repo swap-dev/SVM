@@ -5,7 +5,7 @@ Swap Virtual Machine bytecode interpreter.
 
 |Bytecode Identifier|Opcode Symbol|Arguments|Description|
 |-------------------|-------------|---------|-----------|
-|0|`LOG`|`<message>`|Add a log entry to blockchain storage (in the future; currently prints to console)|
+|0|`LOG`|none|Add a log entry to blockchain storage (in the future; currently prints to console)|
 |1|`RETURN`|none|Halt code execution and return output data|
 |2|`SELFDESTRUCT`|none|Halt execution and mark smart contract for destruction (***IRREVERSIBLE!*** Use with caution)|
 |3|`PUSH`|`<element>`|Push an element onto the program stack|
