@@ -14,21 +14,28 @@ unsigned short check_for_exit_condition()
 	else return 65535;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-	std::string bytecode = "0,Hello World!;4;3,test element";
+	if (argc < 2)
+	{
+		std::cout << "Please input your bytecode as a program argument." << "\n";
+		return 0;
+	}
+
+	std::string bytecode = std::string(argv[1]);
 
 	SVM::Globals::initialize_instruction_mappings();
 
-	const tsl::ordered_map<unsigned long, std::vector<std::any>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
+	const std::vector<std::map<unsigned long, std::vector<std::any>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
 
-	for (const auto& instruction : user_instructions)
+	for (const auto& el : user_instructions)
 	{
-		for (const auto& arg : instruction.second)
+		const auto instruction = el.begin();
+		for (const auto& arg : instruction->second)
 		{
 			SVM::Globals::program_stack.emplace(std::any_cast<std::string>(arg));
 		}
-		SVM::Globals::instructions_mapping[instruction.first]();
+		SVM::Globals::instructions_mapping[instruction->first]();
 
 		switch (check_for_exit_condition())
 		{
@@ -45,14 +52,6 @@ int main()
 			std::cout << "Invalid check_for_exit_condition return code" << "\n";
 			break;
 		}
-	}
-
-	std::cout << "\n\n";
-	while (!SVM::Globals::program_stack.empty())
-	{
-		const std::string& element = SVM::Globals::program_stack.top();
-		std::cout << element << "\n";
-		SVM::Globals::program_stack.pop();
 	}
 
 	return 0;

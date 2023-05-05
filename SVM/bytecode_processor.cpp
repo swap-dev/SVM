@@ -1,8 +1,8 @@
 #include "bytecode_processor.h"
 
 namespace SVM::BytecodeProcessor {
-	tsl::ordered_map<unsigned long, std::vector<std::any>> bytecode_to_instruction_order(std::string bytecode) {
-		tsl::ordered_map<unsigned long, std::vector<std::any>> ret;
+	std::vector<std::map<unsigned long, std::vector<std::any>>> bytecode_to_instruction_order(std::string bytecode) {
+		std::vector<std::map<unsigned long, std::vector<std::any>>> ret;
 
 		const auto instructions = string_split(bytecode, BYTECODE_SEPARATOR);
 		for (const std::any& el : instructions)
@@ -17,7 +17,10 @@ namespace SVM::BytecodeProcessor {
 				args = arg_string_to_arg_vector(instruction.substr(first_comma_location + 1));
 			}
 
-			ret[std::stoul(instruction.substr(0, first_comma_location))] = args;
+			std::map<unsigned long, std::vector<std::any>> temp_map;
+			temp_map.emplace(std::stoul(instruction.substr(0, first_comma_location)), args);
+
+			ret.emplace_back(temp_map);
 		}
 
 		return ret;
@@ -41,10 +44,7 @@ namespace SVM::BytecodeProcessor {
 		}
 
 		// store the last remaining arg (if it exists)
-		if (target.length() > 0)
-		{
-			ret.emplace_back(target);
-		}
+		if (target.length() > 0) ret.emplace_back(target);
 
 		return ret;
 	}
