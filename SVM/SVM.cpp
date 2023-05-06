@@ -1,4 +1,4 @@
-﻿#include "SVM.h"
+#include "SVM.h"
 
 unsigned short check_for_exit_condition()
 {
@@ -28,15 +28,17 @@ int main(int argc, char* argv[])
 
 	const std::vector<std::map<unsigned long, std::vector<std::any>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
 
-	for (const auto& el : user_instructions)
+	while (SVM::Globals::program_counter < user_instructions.size())
 	{
-		const auto instruction = el.begin();
+		const auto instruction = user_instructions[SVM::Globals::program_counter].begin();
 		for (const auto& arg : instruction->second)
 		{
 			SVM::Globals::program_stack.emplace(std::any_cast<std::string>(arg));
 		}
+
 		SVM::Globals::instructions_mapping[instruction->first]();
 
+		// TODO blockchain integration for exit codes
 		switch (check_for_exit_condition())
 		{
 		case 0:
@@ -52,6 +54,8 @@ int main(int argc, char* argv[])
 			std::cout << "Invalid check_for_exit_condition return code" << "\n";
 			break;
 		}
+		
+		SVM::Globals::program_counter++;
 	}
 
 	return 0;
