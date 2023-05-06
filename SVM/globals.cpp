@@ -18,5 +18,8 @@ namespace SVM::Globals
 		instructions_mapping[11] = SVM::math::DIV;
 		instructions_mapping[12] = SVM::math::MOD;
 		instructions_mapping[13] = SVM::math::POW;
+		instructions_mapping[14] = SVM::process_flow::STOP;
+		instructions_mapping[15] = SVM::process_flow::JMP;
+		instructions_mapping[16] = SVM::process_flow::JMPI;
 	}
 }

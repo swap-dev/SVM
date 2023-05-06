@@ -1,4 +1,4 @@
-#include "SVM.h"
+﻿#include "SVM.h"
 
 unsigned short check_for_exit_condition()
 {
@@ -11,6 +11,7 @@ unsigned short check_for_exit_condition()
 
 	if (exit_type == "RETURN") return 1;
 	else if (exit_type == "SELFDESTRUCT") return 2;
+	else if (exit_type == "STOP") return 3;
 	else return 65535;
 }
 
@@ -43,12 +44,14 @@ int main(int argc, char* argv[])
 		{
 		case 0:
 			break;
-		// TODO blockchain integration for RETURN and SELFDESTRUCT
 		case 1:
 			std::cout << "Registered RETURN" << "\n";
 			return 0;
 		case 2:
 			std::cout << "Queueing contract for deletion (SELFDESTRUCT)" << "\n";
+			return 0;
+		case 3:
+			std::cout << "Registered STOP" << "\n";
 			return 0;
 		default:
 			std::cout << "Invalid check_for_exit_condition return code" << "\n";
