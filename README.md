@@ -19,3 +19,6 @@ Swap Virtual Machine bytecode interpreter.
 |11|`DIV`|none|Pop the top two elements on the stack and emplace the resulting quotient onto the top of the stack|
 |12|`MOD`|none|Pop the top two elements on the stack and emplace the resulting remainder from the two elements' quotient onto the top of the stack|
 |13|`POW`|none|Pop the top two elements on the stack. Raise the topmost element to the power of the second element as a number and emplace the result onto the top of the stack|
+|14|`STOP`|none|Halt program execution immediately|
+|15|`JMP`|`<instruction_index>`|Jump to the specified location, removing the `<instruction_index>` argument pushed to the stack in the process.|
+|16|`JMPI`|`<instruction_index>`|Jump to the specified location if the topmost element (before `<instruction_index>` is pushed onto the stack as a parameter) on the stack evaluates to `true`|
