@@ -17,7 +17,7 @@ unsigned short check_for_exit_condition()
 
 int main(int argc, char* argv[])
 {
-	if (argc < 2)
+	if (argc < REQUIRED_ARG_COUNT)
 	{
 		std::cout << "Please input your bytecode as a program argument." << "\n";
 		return 0;
