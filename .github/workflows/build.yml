@@ -20,4 +20,4 @@ jobs:
 
     - name: Build
       # Build program
-      run: cmake --build ${{github.workspace}}/build --config Release
+      run: cmake --build ${{github.workspace}}/build --config Release -j2

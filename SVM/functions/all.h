@@ -6,5 +6,6 @@
 #include "stack.h"
 #include "math.h"
 #include "process_flow.h"
+#include "logic.h"
 
 #endif // !FUNCTIONS_ALL_H

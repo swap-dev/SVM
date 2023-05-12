@@ -16,7 +16,7 @@ namespace SVM::process_flow
 	}
 	void JMP()
 	{
-		set_program_counter(std::stoull(SVM::Globals::program_stack.top()));
+		set_program_counter(std::stoul(SVM::Globals::program_stack.top()));
 	}
 	void JMPI()
 	{
@@ -28,7 +28,7 @@ namespace SVM::process_flow
 
 		if (condition_met)
 		{
-			set_program_counter(std::stoull(location));
+			set_program_counter(std::stoul(location));
 		}
 	}
 }

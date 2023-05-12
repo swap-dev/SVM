@@ -1,1 +1,1 @@
-target_sources(SVM PRIVATE "system.cpp" "stack.cpp" "math.cpp" "process_flow.cpp")
+target_sources(SVM PRIVATE "system.cpp" "stack.cpp" "math.cpp" "process_flow.cpp" "logic.cpp")

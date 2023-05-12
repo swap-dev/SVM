@@ -17,7 +17,7 @@ unsigned short check_for_exit_condition()
 
 int main(int argc, char* argv[])
 {
-	if (argc < 2)
+	if (argc < REQUIRED_ARG_COUNT)
 	{
 		std::cout << "Please input your bytecode as a program argument." << "\n";
 		return 0;
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
 	SVM::Globals::initialize_instruction_mappings();
 
-	const std::vector<std::map<unsigned long, std::vector<std::any>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
+	const std::vector<std::map<unsigned long long, std::vector<std::any>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
 
 	while (SVM::Globals::program_counter < user_instructions.size())
 	{

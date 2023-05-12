@@ -12,7 +12,7 @@ constexpr const char* ARG_SEPARATOR = ",";
 #include <vector>
 
 namespace SVM::BytecodeProcessor {
-	std::vector<std::map<unsigned long, std::vector<std::any>>> bytecode_to_instruction_order(std::string bytecode);
+	std::vector<std::map<unsigned long long, std::vector<std::any>>> bytecode_to_instruction_order(std::string bytecode);
 	std::vector<std::any> arg_string_to_arg_vector(std::string args);
 
 	std::vector<std::any> string_split(std::string target, const std::string separator);
