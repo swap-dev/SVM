@@ -21,5 +21,14 @@ namespace SVM::Globals
 		instructions_mapping[14] = SVM::process_flow::STOP;
 		instructions_mapping[15] = SVM::process_flow::JMP;
 		instructions_mapping[16] = SVM::process_flow::JMPI;
+		instructions_mapping[17] = SVM::logic::LT;
+		instructions_mapping[18] = SVM::logic::GT;
+		instructions_mapping[19] = SVM::logic::EQ;
+		instructions_mapping[20] = SVM::logic::LOR;
+		instructions_mapping[21] = SVM::logic::LNOT;
+		instructions_mapping[22] = SVM::logic::OR;
+		instructions_mapping[23] = SVM::logic::NOT;
+		instructions_mapping[24] = SVM::logic::XOR;
+
 	}
 }

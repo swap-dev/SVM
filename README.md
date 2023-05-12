@@ -7,6 +7,8 @@ Swap Virtual Machine bytecode interpreter.
 * Unless otherwise noted, boolean results are pushed onto the stack as `true` or `false`
 * Unless otherwise noted, math opcodes remove the two topmost stack elements and place the result onto the top of the stack
 * Unless otherwise noted, logic opcodes (`LT`, `GT`, etc.) Pop the two topmost elements on the stack and emplace a boolean result on the top of the stack
+* Bitwise opcodes support the following data types: `n`, `b`, standing for number and boolean
+* All stack elements that undergo processing in the same opcode must be the same data type
 
 |Bytecode Identifier|Opcode Symbol|Arguments|Description|
 |-------------------|-------------|---------|-----------|
@@ -18,20 +20,20 @@ Swap Virtual Machine bytecode interpreter.
 |5|`SSTORE`|`<id>`,`<element>`|Store an element with identifier `<id>` in blockchain storage|
 |6|`SLOAD`|`<id>`|Get an element with identifier `<id>` from blockchain storage and emplace it onto the stack|
 |7|`MSIZE`|none|Emplace the size of the stack (in bytes; calculated before this operation) onto the stack|
-|8|`ADD`|none|[Addition](https://en.wikipedia.org/wiki/Addition) (See Notes)|
-|9|`SUB`|none|[Subtraction](https://en.wikipedia.org/wiki/Subtraction) (See Notes)|
-|10|`MUL`|none|[Multiplication](https://en.wikipedia.org/wiki/Multiplication) (See Notes)|
-|11|`DIV`|none|[Division](https://en.wikipedia.org/wiki/Division) (See Notes)|
-|12|`MOD`|none|[Modulo](https://en.wikipedia.org/wiki/Addition) (See Notes)|
+|8|`ADD`|none|[Addition](https://en.wikipedia.org/wiki/Addition)|
+|9|`SUB`|none|[Subtraction](https://en.wikipedia.org/wiki/Subtraction)|
+|10|`MUL`|none|[Multiplication](https://en.wikipedia.org/wiki/Multiplication)|
+|11|`DIV`|none|[Division](https://en.wikipedia.org/wiki/Division)|
+|12|`MOD`|none|[Modulo](https://en.wikipedia.org/wiki/Addition)|
 |13|`POW`|none|[Exponentiation](https://en.wikipedia.org/wiki/Modulo)|
 |14|`STOP`|none|Halt program execution immediately|
 |15|`JMP`|`<instruction_index>`|Jump to the specified opcode index, removing the `<instruction_index>` argument pushed to the stack in the process.|
 |16|`JMPI`|`<instruction_index>`|Jump to the specified opcode index if the topmost element (before `<instruction_index>` is pushed onto the stack as a parameter) on the stack evaluates to `true`, removing the `<instruction_index>` argument pushed to the stack in the process.|
-|17|`LT`|none|Less Than (See Notes)|
-|18|`GT`|none|Greater Than (See Notes)|
-|19|`EQ`|none|Equal To (See Notes)|
-|20|`LOR`|none|Logical OR (See Notes)|
-|21|`LNOT`|none|Logical NOT (See Notes)|
-|22|`OR`|none|Bitwise OR (See Notes)|
-|23|`NOT`|none|Bitwise NOT (See Notes)|
-|24|`XOR`|none|Bitwise XOR (See Notes)|
+|17|`LT`|none|Less Than|
+|18|`GT`|none|Greater Than|
+|19|`EQ`|none|Equal To|
+|20|`LOR`|none|Logical OR|
+|21|`LNOT`|none|Logical NOT; Only checks the topmost element in the stack|
+|22|`OR`|`<data_type>`|Bitwise OR|
+|23|`NOT`|`<data_type>`|Bitwise NOT|
+|24|`XOR`|`<data_type>`|Bitwise XOR|

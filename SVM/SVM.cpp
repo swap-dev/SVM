@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
 	SVM::Globals::initialize_instruction_mappings();
 
-	const std::vector<std::map<unsigned long, std::vector<std::any>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
+	const std::vector<std::map<unsigned long long, std::vector<std::any>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
 
 	while (SVM::Globals::program_counter < user_instructions.size())
 	{

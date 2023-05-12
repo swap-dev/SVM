@@ -14,7 +14,7 @@ namespace SVM::Globals
 {
 	inline size_t program_counter = 0;
 	inline std::stack<std::string> program_stack;
-	inline std::map<unsigned long, std::function<void()>> instructions_mapping;
+	inline std::map<unsigned long long, std::function<void()>> instructions_mapping;
 
 	void initialize_instruction_mappings();
 }
