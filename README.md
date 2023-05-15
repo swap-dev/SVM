@@ -7,6 +7,20 @@ Swap Virtual Machine bytecode interpreter.
 * All registers have a datatype of UInt64 (`unsigned long long`)
 * While you can use each register for any operation, some recommended uses are listed in the table below
 
+|Register|Recommended Use|
+|--------|---------------|
+|GA|General purpose|
+|GB|General purpose|
+|GC|General purpose|
+|GD|General purpose|
+|GE|General purpose|
+|GF|General purpose|
+|CA|Loop counter|
+|IA|Intermediate operation data storage|
+|IB|Intermediate operation data storage|
+|IC|Intermediate operation data storage|
+|ID|Intermediate operation data storage|
+
 ## Supported Instructions
 
 ### NOTES:
