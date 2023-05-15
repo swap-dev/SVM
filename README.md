@@ -1,7 +1,13 @@
 # SVM
 Swap Virtual Machine bytecode interpreter.
 
-## Documentation for Supported Instructions
+## Available Virtual Registers
+
+### NOTES:
+* All registers have a datatype of UInt64 (`unsigned long long`)
+* While you can use each register for any operation, some recommended uses are listed in the table below
+
+## Supported Instructions
 
 ### NOTES:
 * Unless otherwise noted, boolean results are pushed onto the stack as `true` or `false`
@@ -37,3 +43,6 @@ Swap Virtual Machine bytecode interpreter.
 |22|`OR`|`<data_type>`|Bitwise OR|
 |23|`NOT`|`<data_type>`|Bitwise NOT|
 |24|`XOR`|`<data_type>`|Bitwise XOR|
+|25|`SETREG`|`<register>`,`<value>`|Set register `<register>` to a value of `<value>`|
+|26|`GETREG`|`<register>`|Get the value of the register `<register>`
+|27|`INCREG`|`<register>`|Increment the value of the register `<register>` by one|
