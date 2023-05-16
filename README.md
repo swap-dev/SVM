@@ -4,8 +4,8 @@ Swap Virtual Machine bytecode interpreter.
 ## Available Virtual Registers
 
 ### NOTES:
-* All registers have a datatype of UInt64 (`unsigned long long`)
-* While you can use each register for any operation, some recommended uses are listed in the table below
+* All registers have a datatype of UInt64 (`unsigned long long`) and are initialized to a value of 0 (`0x0000000000000000`)
+* While you can use each register for any operation, some recommended uses (conventions) are listed in the table below
 
 |Register|Recommended Use|
 |--------|---------------|
@@ -49,8 +49,8 @@ Swap Virtual Machine bytecode interpreter.
 |14|`STOP`|none|Halt program execution immediately|
 |15|`JMP`|`<instruction_index>`|Jump to the specified opcode index, removing the `<instruction_index>` argument pushed to the stack in the process.|
 |16|`JMPI`|`<instruction_index>`|Jump to the specified opcode index if the topmost element (before `<instruction_index>` is pushed onto the stack as a parameter) on the stack evaluates to `true`, removing the `<instruction_index>` argument pushed to the stack in the process.|
-|17|`LT`|none|Less Than|
-|18|`GT`|none|Greater Than|
+|17|`LT`|none|[Less Than](https://en.wikipedia.org/wiki/Less-than_sign)|
+|18|`GT`|none|[Greater Than](https://en.wikipedia.org/wiki/Greater-than_sign)|
 |19|`EQ`|none|Equal To|
 |20|`LOR`|none|Logical OR|
 |21|`LNOT`|none|Logical NOT; Only checks the topmost element in the stack|
