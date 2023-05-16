@@ -17,6 +17,7 @@ namespace SVM::Globals
 	inline std::map<unsigned long long, std::function<void()>> instructions_mapping;
 
 	void initialize_instruction_mappings();
+	std::string top_stack_element();
 }
 
 #endif // !GLOBALS_H

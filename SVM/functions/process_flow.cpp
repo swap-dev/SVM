@@ -8,7 +8,6 @@ namespace SVM::process_flow
 	{
 		// account for the program_counter++ at the end of the instruction loop
 		SVM::Globals::program_counter = value - 1;
-		SVM::Globals::program_stack.pop();
 	}
 	void STOP()
 	{
@@ -16,15 +15,14 @@ namespace SVM::process_flow
 	}
 	void JMP()
 	{
-		set_program_counter(std::stoul(SVM::Globals::program_stack.top()));
+		set_program_counter(std::stoul(SVM::Globals::top_stack_element()));
 	}
 	void JMPI()
 	{
-		std::string location = SVM::Globals::program_stack.top();
-		SVM::Globals::program_stack.pop();
+		std::string location = SVM::Globals::top_stack_element();
 
 		bool condition_met;
-		std::istringstream(SVM::Globals::program_stack.top()) >> std::boolalpha >> condition_met;
+		std::istringstream(SVM::Globals::top_stack_element()) >> std::boolalpha >> condition_met;
 
 		if (condition_met)
 		{

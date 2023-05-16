@@ -29,6 +29,11 @@ namespace SVM::Globals
 		instructions_mapping[22] = SVM::logic::OR;
 		instructions_mapping[23] = SVM::logic::NOT;
 		instructions_mapping[24] = SVM::logic::XOR;
-
+	}
+	std::string top_stack_element()
+	{
+		std::string top_element = SVM::Globals::program_stack.top();
+		SVM::Globals::program_stack.pop();
+		return top_element;
 	}
 }
