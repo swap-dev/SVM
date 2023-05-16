@@ -4,9 +4,7 @@ namespace SVM::logic
 {
 	std::string next_element()
 	{
-		std::string element = SVM::Globals::program_stack.top();
-		SVM::Globals::program_stack.pop();
-		return element;
+		return SVM::Globals::top_stack_element();
 	}
 
 	void LT()

@@ -3,7 +3,7 @@
 
 namespace SVM::system {
 	void LOG() {
-		std::cout << SVM::Globals::program_stack.top() << "\n";
+		std::cout << SVM::Globals::top_stack_element() << "\n";
 	}
 
 	void RETURN()

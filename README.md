@@ -1,7 +1,27 @@
 # SVM
 Swap Virtual Machine bytecode interpreter.
 
-## Documentation for Supported Instructions
+## Available Virtual Registers
+
+### NOTES:
+* All registers have a datatype of UInt64 (`unsigned long long`) and are initialized to a value of 0 (`0x0000000000000000`)
+* While you can use each register for any operation, some recommended uses (conventions) are listed in the table below
+
+|Register|Recommended Use|
+|--------|---------------|
+|GA|General purpose|
+|GB|General purpose|
+|GC|General purpose|
+|GD|General purpose|
+|GE|General purpose|
+|GF|General purpose|
+|CA|Loop counter|
+|IA|Intermediate operation data storage|
+|IB|Intermediate operation data storage|
+|IC|Intermediate operation data storage|
+|ID|Intermediate operation data storage|
+
+## Supported Instructions
 
 ### NOTES:
 * Unless otherwise noted, boolean results are pushed onto the stack as `true` or `false`
@@ -29,11 +49,14 @@ Swap Virtual Machine bytecode interpreter.
 |14|`STOP`|none|Halt program execution immediately|
 |15|`JMP`|`<instruction_index>`|Jump to the specified opcode index, removing the `<instruction_index>` argument pushed to the stack in the process.|
 |16|`JMPI`|`<instruction_index>`|Jump to the specified opcode index if the topmost element (before `<instruction_index>` is pushed onto the stack as a parameter) on the stack evaluates to `true`, removing the `<instruction_index>` argument pushed to the stack in the process.|
-|17|`LT`|none|Less Than|
-|18|`GT`|none|Greater Than|
+|17|`LT`|none|[Less Than](https://en.wikipedia.org/wiki/Less-than_sign)|
+|18|`GT`|none|[Greater Than](https://en.wikipedia.org/wiki/Greater-than_sign)|
 |19|`EQ`|none|Equal To|
 |20|`LOR`|none|Logical OR|
 |21|`LNOT`|none|Logical NOT; Only checks the topmost element in the stack|
 |22|`OR`|`<data_type>`|Bitwise OR|
 |23|`NOT`|`<data_type>`|Bitwise NOT|
 |24|`XOR`|`<data_type>`|Bitwise XOR|
+|25|`SETREG`|`<register>`,`<value>`|Set register `<register>` to a value of `<value>`|
+|26|`GETREG`|`<register>`|Get the value of the register `<register>`
+|27|`INCREG`|`<register>`|Increment the value of the register `<register>` by one|
