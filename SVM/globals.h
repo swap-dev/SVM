@@ -32,7 +32,6 @@ namespace SVM::Globals
 	};
 
 	void initialize_instruction_mappings();
-	std::string top_stack_element();
 }
 
 #endif // !GLOBALS_H

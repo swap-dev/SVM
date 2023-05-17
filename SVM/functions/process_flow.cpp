@@ -15,14 +15,14 @@ namespace SVM::process_flow
 	}
 	void JMP()
 	{
-		set_program_counter(std::stoul(SVM::Globals::top_stack_element()));
+		set_program_counter(std::stoul(SVM::Utils::top_stack_element()));
 	}
 	void JMPI()
 	{
-		std::string location = SVM::Globals::top_stack_element();
+		std::string location = SVM::Utils::top_stack_element();
 
 		bool condition_met;
-		std::istringstream(SVM::Globals::top_stack_element()) >> std::boolalpha >> condition_met;
+		std::istringstream(SVM::Utils::top_stack_element()) >> std::boolalpha >> condition_met;
 
 		if (condition_met)
 		{

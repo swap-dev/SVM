@@ -3,6 +3,7 @@
 #define LOGIC
 
 #include "base_include.h"
+#include "../utils.h"
 
 namespace SVM::logic
 {

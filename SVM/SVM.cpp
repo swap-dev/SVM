@@ -27,14 +27,14 @@ int main(int argc, char* argv[])
 
 	SVM::Globals::initialize_instruction_mappings();
 
-	const std::vector<std::map<unsigned long long, std::vector<std::any>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
+	const std::vector<std::map<unsigned long long, std::vector<std::string>>> user_instructions = SVM::BytecodeProcessor::bytecode_to_instruction_order(bytecode);
 
 	while (SVM::Globals::program_counter < user_instructions.size())
 	{
 		const auto instruction = user_instructions[SVM::Globals::program_counter].begin();
 		for (const auto& arg : instruction->second)
 		{
-			SVM::Globals::program_stack.emplace(std::any_cast<std::string>(arg));
+			SVM::Globals::program_stack.emplace(arg);
 		}
 
 		SVM::Globals::instructions_mapping[instruction->first]();

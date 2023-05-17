@@ -3,8 +3,8 @@
 #ifndef ASSEMBLY_PROCESSOR_H
 #define ASSEMBLY_PROCESSOR_H
 
-constexpr const char* BYTECODE_SEPARATOR = ";";
-constexpr const char* ARG_SEPARATOR = ",";
+constexpr char BYTECODE_SEPARATOR = ';';
+constexpr char ARG_SEPARATOR = ',';
 
 #include <map>
 #include <any>
@@ -12,10 +12,10 @@ constexpr const char* ARG_SEPARATOR = ",";
 #include <vector>
 
 namespace SVM::BytecodeProcessor {
-	std::vector<std::map<unsigned long long, std::vector<std::any>>> bytecode_to_instruction_order(std::string bytecode);
-	std::vector<std::any> arg_string_to_arg_vector(std::string args);
+	std::vector<std::map<unsigned long long, std::vector<std::string>>> bytecode_to_instruction_order(std::string& bytecode);
+	std::vector<std::string> arg_string_to_arg_vector(std::string& args, ptrdiff_t& expected_count);
 
-	std::vector<std::any> string_split(std::string target, const std::string separator);
+	std::vector<std::string> string_split(std::string& target, const char, ptrdiff_t& expected_count);
 }
 
 #endif // !ASSEMBLY_PROCESSOR_H

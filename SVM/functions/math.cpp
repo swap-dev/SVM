@@ -5,7 +5,7 @@ namespace SVM::math
 {
 	long double next_number()
 	{
-		return std::stold(SVM::Globals::top_stack_element());
+		return std::stold(SVM::Utils::top_stack_element());
 	}
 
 	void ADD()
