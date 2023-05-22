@@ -2,12 +2,17 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <string>
 #include "globals.h"
 
 namespace SVM::Utils
 {
-	std::string top_stack_element();
+	template <typename T>
+	inline T top_stack_element()
+	{
+		T top_element = SVM::Globals::program_stack.top<T>();
+		SVM::Globals::program_stack.pop();
+		return top_element;
+	}
 }
 
 #endif // !UTILS_H

@@ -7,7 +7,6 @@ constexpr char BYTECODE_SEPARATOR = ';';
 constexpr char ARG_SEPARATOR = ',';
 
 #include <map>
-#include <any>
 #include <string>
 #include <vector>
 
