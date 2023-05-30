@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
         const SVM::BytecodeProcessor::OpcodeParseReturn parser_return = SVM::BytecodeProcessor::parse_next_opcode(bytecode, SVM::Globals::program_counter, file_size);
 
         // done executing all instructions
-        if (parser_return.opcode_id == 0xFFFFFFFFFFFFFFFF)
+        if (parser_return.opcode_id == 0xFFFF)
             break;
 
         SVM::Globals::program_counter = parser_return.next_index;

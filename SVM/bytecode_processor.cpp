@@ -5,7 +5,7 @@
 namespace SVM::BytecodeProcessor {
 	OpcodeParseReturn parse_next_opcode(const uint8_t* bytecode, uint64_t start_from, uint64_t bytecode_length)
 	{
-        if (start_from >= bytecode_length) return OpcodeParseReturn{0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF};
+        if (start_from >= bytecode_length) return OpcodeParseReturn{0xFFFF, 0xFFFFFFFFFFFFFFFF};
 
 		uint64_t instruction_stop = start_from;
         while (bytecode[instruction_stop] != BYTECODE_SEPARATOR) {
@@ -14,7 +14,7 @@ namespace SVM::BytecodeProcessor {
         }
 
         // parsed all instructions
-        if (instruction_stop == start_from) return OpcodeParseReturn{0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF};
+        if (instruction_stop == start_from) return OpcodeParseReturn{0xFFFF, 0xFFFFFFFFFFFFFFFF};
 
         const uint16_t opcode = *reinterpret_cast<const uint16_t*>(bytecode + start_from);
 

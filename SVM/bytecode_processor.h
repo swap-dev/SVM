@@ -9,7 +9,7 @@ constexpr uint8_t BYTECODE_SEPARATOR = 0x3B;
 
 namespace SVM::BytecodeProcessor {
 	struct OpcodeParseReturn {
-		uint64_t opcode_id;
+		uint16_t opcode_id;
         uint64_t next_index;
 	};
 
