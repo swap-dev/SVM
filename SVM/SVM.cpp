@@ -1,7 +1,7 @@
 ﻿#include "SVM.h"
 #include <sys/stat.h>
 
-//unsigned short check_for_exit_condition()
+//uint16_t check_for_exit_condition()
 //{
 //	if (SVM::Globals::program_stack.empty()) return 0;
 //

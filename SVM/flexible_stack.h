@@ -26,8 +26,8 @@ public:
 /// </summary>
 class FlexibleStack
 {
-	static constexpr unsigned short DEFAULT_STACK_MEM_ALLOC_SIZE = 1024 * sizeof(int);
-	static constexpr unsigned short DEFAULT_VECTOR_ALLOC_SIZE = DEFAULT_STACK_MEM_ALLOC_SIZE;
+	static constexpr uint16_t DEFAULT_STACK_MEM_ALLOC_SIZE = 1024 * sizeof(int);
+	static constexpr uint16_t DEFAULT_VECTOR_ALLOC_SIZE = DEFAULT_STACK_MEM_ALLOC_SIZE;
 
 	std::vector<uint32_t> _el_sizes;
 	size_t _current_mem_idx;
