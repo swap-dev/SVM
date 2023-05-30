@@ -1,6 +1,6 @@
 #pragma once
-#ifndef LOGIC
-#define LOGIC
+#ifndef LOGIC_H
+#define LOGIC_H
 
 #include "base_include.h"
 #include "../globals.h"
@@ -105,4 +105,4 @@ namespace SVM::logic
     }
 }
 
-#endif // !LOGIC
+#endif // !LOGIC_H

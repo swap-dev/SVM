@@ -6,17 +6,10 @@
 
 namespace SVM::registers
 {
-    template <typename T>
-    inline T top_stack_element()
-    {
-        T el = SVM::Globals::program_stack.top<T>();
-        SVM::Globals::program_stack.pop();
-        return el;
-    }
-
 	inline void SETREG()
     {
-        auto value = top_stack_element<unsigned long long>();
+        auto value = SVM::Globals::program_stack.top<uint64_t>();
+        SVM::Globals::program_stack.pop();
         SVM::Globals::registers[SVM::Globals::program_stack.top_cstring()] = value;
         SVM::Globals::program_stack.pop();
     }
