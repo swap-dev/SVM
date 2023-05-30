@@ -51,18 +51,15 @@ int main(int argc, char* argv[])
 
 	SVM::Utils::initialize_instruction_mappings();
 
-    unsigned long long start_from = 0;
-    while (start_from < file_size)
+    while (SVM::Globals::program_counter < file_size)
     {
-        const SVM::BytecodeProcessor::OpcodeParseReturn parser_return = SVM::BytecodeProcessor::parse_next_opcode(bytecode, start_from, file_size);
+        const SVM::BytecodeProcessor::OpcodeParseReturn parser_return = SVM::BytecodeProcessor::parse_next_opcode(bytecode, SVM::Globals::program_counter, file_size);
 
         // done executing all instructions
         if (parser_return.opcode_id == 0xFFFFFFFFFFFFFFFF)
             break;
 
-//        std::cout << "opcode: " << parser_return.opcode_id << " | stack size: " << SVM::Globals::program_stack.size() << "\n";
-
-        start_from = parser_return.next_index;
+        SVM::Globals::program_counter = parser_return.next_index;
         SVM::Globals::instructions_mapping[parser_return.opcode_id]();
     }
 

@@ -4,7 +4,7 @@ Swap Virtual Machine bytecode interpreter.
 ## Available Virtual Registers
 
 ### NOTES:
-* All registers have a datatype of UInt64 (`unsigned long long`) and are initialized to a value of 0 (`0x0000000000000000`)
+* All registers have a datatype of UInt64 and are initialized to a value of 0 (`0x0000000000000000`)
 * While you can use each register for any operation, some recommended uses (conventions) are listed in the table below
 
 | Register | Recommended Use                     |
