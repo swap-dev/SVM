@@ -3,18 +3,22 @@
 #ifndef ASSEMBLY_PROCESSOR_H
 #define ASSEMBLY_PROCESSOR_H
 
-constexpr char BYTECODE_SEPARATOR = ';';
-constexpr char ARG_SEPARATOR = ',';
+constexpr char BYTECODE_SEPARATOR = 0x3B;
+//constexpr char ARG_SEPARATOR = 0x2C;
 
-#include <map>
-#include <string>
-#include <vector>
+#include <cstdint>
 
 namespace SVM::BytecodeProcessor {
-	std::vector<std::map<unsigned long long, std::vector<std::string>>> bytecode_to_instruction_order(std::string& bytecode);
-	std::vector<std::string> arg_string_to_arg_vector(std::string& args, ptrdiff_t& expected_count);
+	struct OpcodeParseReturn {
+		uint64_t opcode_id;
+        uint64_t next_index;
+	};
 
-	std::vector<std::string> string_split(std::string& target, const char, ptrdiff_t& expected_count);
+	/// <summary>
+	/// gather opcode ID and push opcode parameters onto the stack
+	/// </summary>
+	/// <returns>opcode ID</returns>
+	OpcodeParseReturn parse_next_opcode(const unsigned char* bytecode, unsigned long long start_from, unsigned long long bytecode_length);
 }
 
 #endif // !ASSEMBLY_PROCESSOR_H

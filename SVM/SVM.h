@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef SMV_H
 #define SVM_H
 
@@ -9,9 +9,10 @@ constexpr unsigned char REQUIRED_ARG_COUNT = 1;
 #endif
 
 #include <iostream>
+#include <fstream>
 #include <vector>
-//#include "bytecode_processor.h"
+#include "bytecode_processor.h"
 #include "globals.h"
-#include "flexible_stack.h"
+#include "utils.h"
 
 #endif // !SMV_H

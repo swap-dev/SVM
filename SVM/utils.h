@@ -6,13 +6,8 @@
 
 namespace SVM::Utils
 {
-	template <typename T>
-	inline T top_stack_element()
-	{
-		T top_element = SVM::Globals::program_stack.top<T>();
-		SVM::Globals::program_stack.pop();
-		return top_element;
-	}
+    extern bool strings_are_equal(const char* str1, const char* str2);
+    extern void initialize_instruction_mappings();
 }
 
 #endif // !UTILS_H

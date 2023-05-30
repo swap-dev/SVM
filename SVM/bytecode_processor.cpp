@@ -1,49 +1,44 @@
 #include "bytecode_processor.h"
+#include <iostream>
+#include "globals.h"
 
 namespace SVM::BytecodeProcessor {
-	std::vector<std::map<unsigned long long, std::vector<std::string>>> bytecode_to_instruction_order(std::string& bytecode) {
-		std::vector<std::map<unsigned long long, std::vector<std::string>>> ret;
-
-		ptrdiff_t instruction_count = std::count(bytecode.begin(), bytecode.end(), BYTECODE_SEPARATOR);
-		ret.reserve(instruction_count);
-
-		const auto instructions = string_split(bytecode, BYTECODE_SEPARATOR, instruction_count);
-		for (const std::string& instruction : instructions)
-		{
-			ptrdiff_t argument_count = std::count(instruction.begin(), instruction.end(), ARG_SEPARATOR);
-			const size_t first_comma_location = instruction.find(ARG_SEPARATOR);
-
-			std::vector<std::string> args;
-
-			if (first_comma_location != std::string::npos)
-			{
-				std::string next = instruction.substr(first_comma_location + 1);
-				args = arg_string_to_arg_vector(next, argument_count);
-			}
-			ret.emplace_back(std::map<unsigned long long, std::vector<std::string>>{ { std::stoull(instruction.substr(0, first_comma_location)), args } });
-		}
-
-		return ret;
-	}
-
-	std::vector<std::string> arg_string_to_arg_vector(std::string& args, ptrdiff_t& expected_count)
+	OpcodeParseReturn parse_next_opcode(const unsigned char* bytecode, unsigned long long start_from, unsigned long long bytecode_length)
 	{
-		return string_split(args, ARG_SEPARATOR, expected_count);
-	}
+        if (start_from >= bytecode_length) return OpcodeParseReturn{0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF};
 
-	std::vector<std::string> string_split(std::string& target, const char separator, ptrdiff_t& expected_count)
-	{
-		std::vector<std::string> ret;
-		if (expected_count != -1) ret.reserve(expected_count);
+		unsigned long long instruction_stop = start_from;
+        while (bytecode[instruction_stop] != BYTECODE_SEPARATOR) {
+            if (instruction_stop == bytecode_length) break;
+            instruction_stop++;
+        }
 
-		size_t pos = 0;
-		while ((pos = target.find(separator)) != std::string::npos) {
-			ret.emplace_back(target.substr(0, pos));
-			target.erase(0, pos + 1); // (pos + 1) accounts for the length of the bytecode separator
-		}
-		// store the last remaining arg (if it exists)
-		if (target.length() > 0) ret.emplace_back(target);
+        // parsed all instructions
+        if (instruction_stop == start_from) return OpcodeParseReturn{0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF};
 
-		return ret;
+        const uint16_t opcode = *reinterpret_cast<const uint16_t*>(bytecode + start_from);
+
+        unsigned long long pos_parsed = start_from + 2; // +2 for opcode uint16
+        while (pos_parsed < instruction_stop)
+        {
+            const unsigned char* arg_offset = bytecode + pos_parsed;
+            const uint8_t arg_size = *reinterpret_cast<const uint8_t*>(arg_offset);
+            arg_offset++;
+
+            if (bytecode[pos_parsed + 1] == '"')
+            {
+                SVM::Globals::program_stack.push_cstring(reinterpret_cast<const char*>(arg_offset + 1)); // +1 to avoid `"`
+            }
+            else
+            {
+                uint64_t val = 0;
+                memcpy(&val, reinterpret_cast<const uint8_t*>(arg_offset), arg_size);
+                SVM::Globals::program_stack.push<unsigned long long>(val, 8);
+            }
+
+            pos_parsed += arg_size + 1; // +1 for arg_size byte;
+        }
+
+        return OpcodeParseReturn {opcode, instruction_stop + 1};
 	}
 }

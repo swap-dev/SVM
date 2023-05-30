@@ -9,12 +9,12 @@
 class FlexibleStackException : public std::runtime_error
 {
 public:
-	inline FlexibleStackException(char const* const message) throw()
+	inline explicit FlexibleStackException(char const* const message) noexcept
 		: std::runtime_error(message)
 	{
 
 	}
-	inline virtual char const* what() const throw()
+	[[nodiscard]] inline char const* what() const noexcept override
 	{
 		return exception::what();
 	}
@@ -30,17 +30,48 @@ class FlexibleStack
 	static constexpr unsigned short DEFAULT_VECTOR_ALLOC_SIZE = DEFAULT_STACK_MEM_ALLOC_SIZE;
 
 	std::vector<uint32_t> _el_sizes;
-	uint64_t _current_mem_idx;
+	size_t _current_mem_idx;
 	uint8_t* _data;
-	uint64_t _max_size;
+	size_t _max_size;
+    bool _top_el_is_cstring;
 
-	inline void throw_if_empty_stack(const char* message)
+	inline void throw_if_empty_stack(const char* message) const
 	{
 		if (this->_current_mem_idx == 0)
 		{
 			throw FlexibleStackException(message);
 		}
 	}
+
+    static inline uint32_t cstring_length(const char* str)
+    {
+        uint32_t length = 0;
+        while (str[length] != '\0') length++;
+
+        return length;
+    }
+
+    void realloc_if_no_space(const uint32_t& el_size)
+    {
+        if ((this->_current_mem_idx - 1 + el_size) > this->_max_size)
+        {
+            const size_t new_size = this->_max_size * 2; // exponential growth memory reallocation
+            auto* new_ptr = reinterpret_cast<uint8_t*>(realloc(this->_data, new_size));
+            if (new_ptr == nullptr)
+                throw FlexibleStackException("Failed to reallocate memory");
+
+            this->_data = new_ptr;
+            this->_max_size = new_size;
+        }
+    }
+
+    template <typename T>
+    inline void store_data(T* el, const uint32_t& size)
+    {
+        memcpy(this->_data + this->_current_mem_idx, el, size);
+        this->_current_mem_idx += size;
+        this->_el_sizes.emplace_back(size);
+    }
 
 public:
 	inline FlexibleStack()
@@ -49,6 +80,7 @@ public:
 		this->_data = reinterpret_cast<uint8_t*>(malloc(DEFAULT_STACK_MEM_ALLOC_SIZE));
 		this->_el_sizes.reserve(DEFAULT_VECTOR_ALLOC_SIZE);
 		this->_max_size = DEFAULT_STACK_MEM_ALLOC_SIZE;
+        this->_top_el_is_cstring = false;
 	}
 
 	inline ~FlexibleStack()
@@ -61,29 +93,35 @@ public:
 	{
 		throw_if_empty_stack("FlexibleStack::top() called on empty stack");
 
-		// base data pointer + region of memory that contains the data
+		// base data pointer + start of memory region containing the data
 		return *reinterpret_cast<T*>(this->_data + this->_current_mem_idx - this->_el_sizes.back());
 	}
 
+    inline const char* top_cstring()
+    {
+        if (!this->_top_el_is_cstring) throw FlexibleStackException("FlexibleStack::top_cstring() called on a non-string element");
+
+        return reinterpret_cast<const char*>(this->_data + this->_current_mem_idx - this->_el_sizes.back());
+    }
+
 	template <typename T>
-	inline void push(T el)
+	inline void push(T el, uint32_t size = 0)
 	{
-		const uint32_t size = sizeof(el);
-		if ((this->_current_mem_idx - 1 + size) > this->_max_size)
-		{
-			const uint64_t new_size = this->_max_size * 2; // exponential growth memory reallocation
-			uint8_t* new_ptr = reinterpret_cast<uint8_t*>(realloc(this->_data, new_size));
-			if (new_ptr == nullptr)
-				throw FlexibleStackException("Failed to realloc memory during push");
+        if (size == 0) size = sizeof(el);
 
-			this->_data = new_ptr;
-			this->_max_size = new_size;
-		}
-
-		memcpy(this->_data + this->_current_mem_idx, &el, size);
-		this->_current_mem_idx += size;
-		this->_el_sizes.emplace_back(size);
+        realloc_if_no_space(size);
+        store_data(&el, size);
+        this->_top_el_is_cstring = false;
 	}
+
+    inline void push_cstring(const char* el, uint32_t size=0)
+    {
+        if (size == 0) size = cstring_length(el);
+
+        realloc_if_no_space(size);
+        store_data(el, size);
+        this->_top_el_is_cstring = true;
+    }
 
 	inline void pop()
 	{
@@ -92,10 +130,20 @@ public:
 		this->_el_sizes.pop_back();
 	}
 
-	inline uint64_t size()
+	[[nodiscard]] inline size_t size() const
 	{
-		return this->_current_mem_idx - 1;
+		return this->_current_mem_idx;
 	}
+
+    [[nodiscard]] inline uint32_t& top_el_size()
+    {
+        return this->_el_sizes.back();
+    }
+
+    [[nodiscard]] inline const bool& top_el_is_cstring() const
+    {
+        return this->_top_el_is_cstring;
+    }
 };
 
 #endif // !FLEXIBLE_STACK_TYPE_H
