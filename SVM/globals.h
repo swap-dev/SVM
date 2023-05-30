@@ -10,8 +10,8 @@ namespace SVM::Globals
 {
 	inline uint64_t program_counter = 0;
 	inline FlexibleStack program_stack;
-	inline std::map<unsigned long long, std::function<void()>> instructions_mapping;
-	inline std::map<const char*, unsigned long long> registers =
+	inline std::map<uint64_t, std::function<void()>> instructions_mapping;
+	inline std::map<const char*, uint64_t> registers =
     {
         { "GA", 0 },
         { "GB", 0 },

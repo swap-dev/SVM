@@ -18,35 +18,35 @@ namespace SVM::logic
 
 	inline void LT()
     {
-        const auto num1 = top_stack_element<unsigned long long>();
-        const auto num2 = top_stack_element<unsigned long long>();
+        const auto num1 = top_stack_element<uint64_t>();
+        const auto num2 = top_stack_element<uint64_t>();
 
         SVM::Globals::program_stack.push<bool>(num1 < num2, 1);
     }
 
 	inline void GT()
     {
-        const auto num1 = top_stack_element<unsigned long long>();
-        const auto num2 = top_stack_element<unsigned long long>();
+        const auto num1 = top_stack_element<uint64_t>();
+        const auto num2 = top_stack_element<uint64_t>();
 
         SVM::Globals::program_stack.push<bool>(num1 > num2, 1);
     }
 
 	inline void EQ()
     {
-        SVM::Globals::program_stack.push<bool>(top_stack_element<unsigned long long>() == top_stack_element<unsigned long long>(), 1);
+        SVM::Globals::program_stack.push<bool>(top_stack_element<uint64_t>() == top_stack_element<uint64_t>(), 1);
     }
 
 	inline void OR()
     {
-        const char data_type = SVM::Globals::program_stack.top_cstring()[0];
+        const int8_t data_type = SVM::Globals::program_stack.top_cstring()[0];
 
         if (data_type == 'n')
         {
-            const auto num1 = top_stack_element<unsigned long long>();
-            const auto num2 = top_stack_element<unsigned long long>();
+            const auto num1 = top_stack_element<uint64_t>();
+            const auto num2 = top_stack_element<uint64_t>();
 
-            SVM::Globals::program_stack.push<unsigned long long>(num1 | num2, 8);
+            SVM::Globals::program_stack.push<uint64_t>(num1 | num2, 8);
         }
         else if (data_type == 'b')
         {
@@ -59,11 +59,11 @@ namespace SVM::logic
 
 	inline void NOT()
     {
-        const char data_type = SVM::Globals::program_stack.top_cstring()[0];
+        const int8_t data_type = SVM::Globals::program_stack.top_cstring()[0];
 
         if (data_type == 'n')
         {
-            SVM::Globals::program_stack.push<unsigned long long>(~(top_stack_element<unsigned long long>()), 8);
+            SVM::Globals::program_stack.push<uint64_t>(~(top_stack_element<uint64_t>()), 8);
         }
         else if (data_type == 'b')
         {
@@ -86,14 +86,14 @@ namespace SVM::logic
 
 	inline void XOR()
     {
-        const char data_type = SVM::Globals::program_stack.top_cstring()[0];
+        const int8_t data_type = SVM::Globals::program_stack.top_cstring()[0];
 
         if (data_type == 'n')
         {
-            const auto num1 = top_stack_element<unsigned long long>();
-            const auto num2 = top_stack_element<unsigned long long>();
+            const auto num1 = top_stack_element<uint64_t>();
+            const auto num2 = top_stack_element<uint64_t>();
 
-            SVM::Globals::program_stack.push<unsigned long long>(num1 ^ num2, 8);
+            SVM::Globals::program_stack.push<uint64_t>(num1 ^ num2, 8);
         }
         else if (data_type == 'b')
         {

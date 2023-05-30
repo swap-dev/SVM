@@ -3,11 +3,11 @@
 #include "globals.h"
 
 namespace SVM::BytecodeProcessor {
-	OpcodeParseReturn parse_next_opcode(const unsigned char* bytecode, unsigned long long start_from, unsigned long long bytecode_length)
+	OpcodeParseReturn parse_next_opcode(const uint8_t* bytecode, uint64_t start_from, uint64_t bytecode_length)
 	{
         if (start_from >= bytecode_length) return OpcodeParseReturn{0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF};
 
-		unsigned long long instruction_stop = start_from;
+		uint64_t instruction_stop = start_from;
         while (bytecode[instruction_stop] != BYTECODE_SEPARATOR) {
             if (instruction_stop == bytecode_length) break;
             instruction_stop++;
@@ -18,10 +18,10 @@ namespace SVM::BytecodeProcessor {
 
         const uint16_t opcode = *reinterpret_cast<const uint16_t*>(bytecode + start_from);
 
-        unsigned long long pos_parsed = start_from + 2; // +2 for opcode uint16
+        uint64_t pos_parsed = start_from + 2; // +2 for opcode uint16
         while (pos_parsed < instruction_stop)
         {
-            const unsigned char* arg_offset = bytecode + pos_parsed;
+            const uint8_t* arg_offset = bytecode + pos_parsed;
             const uint8_t arg_size = *reinterpret_cast<const uint8_t*>(arg_offset);
             arg_offset++;
 
@@ -33,7 +33,7 @@ namespace SVM::BytecodeProcessor {
             {
                 uint64_t val = 0;
                 memcpy(&val, reinterpret_cast<const uint8_t*>(arg_offset), arg_size);
-                SVM::Globals::program_stack.push<unsigned long long>(val, 8);
+                SVM::Globals::program_stack.push<uint64_t>(val, 8);
             }
 
             pos_parsed += arg_size + 1; // +1 for arg_size byte;

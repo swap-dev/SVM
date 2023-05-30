@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-	auto* bytecode = new unsigned char[file_size];
+	auto* bytecode = new uint8_t[file_size];
 	bytecode_file.read(reinterpret_cast<char*>(bytecode), file_size);
 	bytecode_file.close();
 
@@ -61,39 +61,26 @@ int main(int argc, char* argv[])
 
         SVM::Globals::program_counter = parser_return.next_index;
         SVM::Globals::instructions_mapping[parser_return.opcode_id]();
+
+        //	// TODO blockchain integration for exit codes
+        //	switch (check_for_exit_condition())
+        //	{
+        //	case 0:
+        //		break;
+        //	case 1:
+        //		std::cout << "Registered RETURN" << "\n";
+        //		return 0;
+        //	case 2:
+        //		std::cout << "Queueing contract for deletion (SELFDESTRUCT)" << "\n";
+        //		return 0;
+        //	case 3:
+        //		std::cout << "Registered STOP" << "\n";
+        //		return 0;
+        //	default:
+        //		std::cout << "Invalid check_for_exit_condition return code" << "\n";
+        //		break;
+        //	}
     }
-
-	//while (SVM::Globals::program_counter < user_instructions.size())
-	//{
-	//	const auto instruction = user_instructions[SVM::Globals::program_counter].begin();
-	//	for (const auto& arg : instruction->second)
-	//	{
-	//		SVM::Globals::program_stack.emplace(arg);
-	//	}
-
-	//	SVM::Globals::instructions_mapping[instruction->first]();
-
-	//	// TODO blockchain integration for exit codes
-	//	switch (check_for_exit_condition())
-	//	{
-	//	case 0:
-	//		break;
-	//	case 1:
-	//		std::cout << "Registered RETURN" << "\n";
-	//		return 0;
-	//	case 2:
-	//		std::cout << "Queueing contract for deletion (SELFDESTRUCT)" << "\n";
-	//		return 0;
-	//	case 3:
-	//		std::cout << "Registered STOP" << "\n";
-	//		return 0;
-	//	default:
-	//		std::cout << "Invalid check_for_exit_condition return code" << "\n";
-	//		break;
-	//	}
-	//	
-	//	SVM::Globals::program_counter++;
-	//}
 
 	return 0;
 }

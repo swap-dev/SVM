@@ -18,7 +18,7 @@ namespace SVM::registers
     {
         const char* target_register = SVM::Globals::program_stack.top_cstring();
         SVM::Globals::program_stack.pop();
-        SVM::Globals::program_stack.push<unsigned long long>(SVM::Globals::registers[target_register], 8);
+        SVM::Globals::program_stack.push<uint64_t>(SVM::Globals::registers[target_register], 8);
     }
 
 	inline void INCREG()

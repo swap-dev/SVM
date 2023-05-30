@@ -3,10 +3,9 @@
 #ifndef ASSEMBLY_PROCESSOR_H
 #define ASSEMBLY_PROCESSOR_H
 
-constexpr char BYTECODE_SEPARATOR = 0x3B;
-//constexpr char ARG_SEPARATOR = 0x2C;
-
 #include <cstdint>
+
+constexpr uint8_t BYTECODE_SEPARATOR = 0x3B;
 
 namespace SVM::BytecodeProcessor {
 	struct OpcodeParseReturn {
@@ -18,7 +17,7 @@ namespace SVM::BytecodeProcessor {
 	/// gather opcode ID and push opcode parameters onto the stack
 	/// </summary>
 	/// <returns>opcode ID</returns>
-	OpcodeParseReturn parse_next_opcode(const unsigned char* bytecode, unsigned long long start_from, unsigned long long bytecode_length);
+	OpcodeParseReturn parse_next_opcode(const uint8_t* bytecode, uint64_t start_from, uint64_t bytecode_length);
 }
 
 #endif // !ASSEMBLY_PROCESSOR_H

@@ -26,12 +26,12 @@ namespace SVM::process_flow
 
     inline void JMP()
     {
-        set_program_counter(static_cast<size_t>(top_stack_element<unsigned long long>()));
+        set_program_counter(static_cast<size_t>(top_stack_element<uint64_t>()));
     }
 
     inline void JMPI()
     {
-        const auto location = static_cast<size_t>(top_stack_element<unsigned long long>());
+        const auto location = static_cast<size_t>(top_stack_element<uint64_t>());
         if (top_stack_element<bool>())
             set_program_counter(location);
     }
